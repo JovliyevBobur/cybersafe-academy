@@ -167,16 +167,39 @@ const Contact: React.FC = () => {
               {/* Social Links */}
               <div className="p-6 rounded-2xl bg-card border border-border">
                 <h3 className="font-semibold mb-4">{t('followUs')}</h3>
-                <div className="flex gap-3">
-                  {['Telegram', 'Instagram', 'YouTube', 'Facebook'].map((social) => (
-                    <a
-                      key={social}
-                      href="#"
-                      className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
-                    >
-                      {social}
-                    </a>
-                  ))}
+                <div className="flex gap-3 flex-wrap">
+                  <a
+                    href="https://t.me/ShirinErkinbayeva"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
+                  >
+                    Telegram
+                  </a>
+                  <a
+                    href="https://github.com/JBoburHacker005"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href="mailto:jbobur2o1o@gmail.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
+                  >
+                    Email
+                  </a>
+                  <a
+                    href="tel:+998930054287"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
+                  >
+                    Phone
+                  </a>
                 </div>
               </div>
             </div>
