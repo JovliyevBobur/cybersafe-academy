@@ -99,10 +99,14 @@ const Footer: React.FC = () => {
           {/* Social */}
           <div>
             <h4 className="font-semibold mb-4">{t('followUs')}</h4>
-            <div className="flex gap-3">
+            <div className="flex gap-3 mb-4">
               {socialLinks.map(social => <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200" aria-label={social.label}>
                   <social.icon className="h-5 w-5" />
                 </a>)}
+            </div>
+            <div className="space-y-2 text-xs text-muted-foreground">
+              <p>Muallif: Shirin Erkinbayeva</p>
+              <p>Yaratuvchi: Bobur Jovliyev</p>
             </div>
           </div>
         </div>
