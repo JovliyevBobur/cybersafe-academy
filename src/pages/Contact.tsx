@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, MessageSquare } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
-import { apiService, ContactInfo, SocialLink } from '@/services/api';
 
 const Contact: React.FC = () => {
   const { t } = useLanguage();
@@ -17,33 +16,12 @@ const Contact: React.FC = () => {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
-  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const getLang = () => {
     if (t('home') === 'Home') return 'en';
     if (t('home') === 'Главная') return 'ru';
     return 'uz';
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [contact, social] = await Promise.all([
-          apiService.getContactInfo(),
-          apiService.getSocialLinks(),
-        ]);
-        setContactInfo(contact);
-        setSocialLinks(social);
-      } catch (error) {
-        console.error('Failed to fetch contact data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,27 +43,23 @@ const Contact: React.FC = () => {
     setIsSubmitting(false);
   };
 
-  const getContactInfoList = () => {
-    if (!contactInfo) return [];
-    const lang = getLang();
-    return [
-      {
-        icon: Mail,
-        title: 'Email',
-        value: contactInfo.email,
-      },
-      {
-        icon: Phone,
-        title: lang === 'en' ? 'Phone' : lang === 'ru' ? 'Телефон' : 'Telefon',
-        value: contactInfo.phone,
-      },
-      {
-        icon: MapPin,
-        title: lang === 'en' ? 'Address' : lang === 'ru' ? 'Адрес' : 'Manzil',
-        value: lang === 'en' ? contactInfo.address_en : lang === 'ru' ? contactInfo.address_ru : contactInfo.address_uz,
-      },
-    ];
-  };
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: 'Email',
+      value: 'info@cybersafe-edu.uz',
+    },
+    {
+      icon: Phone,
+      title: getLang() === 'en' ? 'Phone' : getLang() === 'ru' ? 'Телефон' : 'Telefon',
+      value: '+998 90 123 45 67',
+    },
+    {
+      icon: MapPin,
+      title: getLang() === 'en' ? 'Address' : getLang() === 'ru' ? 'Адрес' : 'Manzil',
+      value: getLang() === 'en' ? 'Tashkent, Uzbekistan' : getLang() === 'ru' ? 'Ташкент, Узбекистан' : 'Toshkent, O\'zbekiston',
+    },
+  ];
 
   return (
     <Layout>
@@ -176,47 +150,33 @@ const Contact: React.FC = () => {
                   {getLang() === 'en' ? 'Contact Information' : getLang() === 'ru' ? 'Контактная информация' : 'Aloqa ma\'lumotlari'}
                 </h2>
                 <div className="space-y-4">
-                  {loading ? (
-                    <div className="text-muted-foreground">Yuklanmoqda...</div>
-                  ) : getContactInfoList().length > 0 ? (
-                    getContactInfoList().map((info, index) => (
-                      <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border">
-                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <info.icon className="w-6 h-6 text-primary" />
-                        </div>
-                        <div>
-                          <div className="text-sm text-muted-foreground">{info.title}</div>
-                          <div className="font-medium">{info.value}</div>
-                        </div>
+                  {contactInfo.map((info, index) => (
+                    <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border">
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <info.icon className="w-6 h-6 text-primary" />
                       </div>
-                    ))
-                  ) : (
-                    <div className="text-muted-foreground">Ma'lumotlar mavjud emas</div>
-                  )}
+                      <div>
+                        <div className="text-sm text-muted-foreground">{info.title}</div>
+                        <div className="font-medium">{info.value}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               {/* Social Links */}
               <div className="p-6 rounded-2xl bg-card border border-border">
                 <h3 className="font-semibold mb-4">{t('followUs')}</h3>
-                <div className="flex gap-3 flex-wrap">
-                  {loading ? (
-                    <div className="text-muted-foreground">Yuklanmoqda...</div>
-                  ) : socialLinks.length > 0 ? (
-                    socialLinks.map((link) => (
-                      <a
-                        key={link.id}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
-                      >
-                        {link.label}
-                      </a>
-                    ))
-                  ) : (
-                    <div className="text-muted-foreground">Havolalar mavjud emas</div>
-                  )}
+                <div className="flex gap-3">
+                  {['Telegram', 'Instagram', 'YouTube', 'Facebook'].map((social) => (
+                    <a
+                      key={social}
+                      href="#"
+                      className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
+                    >
+                      {social}
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>

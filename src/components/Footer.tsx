@@ -1,45 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Send, Github, Mail, Phone } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { apiService, SocialLink, FooterInfo } from '@/services/api';
 import logo from '@/assets/logo.png';
 
 const Footer: React.FC = () => {
-  const { t } = useLanguage();
-  const [socialLinks, setSocialLinks] = useState<SocialLink[]>([]);
-  const [footerInfo, setFooterInfo] = useState<FooterInfo | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [social, footer] = await Promise.all([
-          apiService.getSocialLinks(),
-          apiService.getFooterInfo(),
-        ]);
-        setSocialLinks(social);
-        setFooterInfo(footer);
-      } catch (error) {
-        console.error('Failed to fetch footer data:', error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const getIconForPlatform = (platform: string) => {
-    switch (platform) {
-      case 'telegram':
-        return Send;
-      case 'github':
-        return Github;
-      case 'email':
-        return Mail;
-      case 'phone':
-        return Phone;
-      default:
-        return Send;
-    }
-  };
+  const {
+    t
+  } = useLanguage();
+  const socialLinks = [{
+    icon: Send,
+    href: 'https://t.me/ShirinErkinbayeva',
+    label: 'Telegram'
+  }, {
+    icon: Github,
+    href: 'https://github.com/JBoburHacker005',
+    label: 'GitHub'
+  }, {
+    icon: Mail,
+    href: 'mailto:jbobur2o1o@gmail.com',
+    label: 'Email'
+  }, {
+    icon: Phone,
+    href: 'tel:+998930054287',
+    label: 'Phone'
+  }];
   const quickLinks = [{
     path: '/',
     label: t('home')
@@ -65,7 +50,7 @@ const Footer: React.FC = () => {
               <img 
                 src={logo} 
                 alt="CyberSafe Edu" 
-                className="h-10 w-10 rounded-full object-cover border-2 border-border"
+                className="h-10 w-10 rounded-full object-cover"
               />
               <span className="font-bold text-xl">
                 <span className="text-gradient">CyberSafe</span>
@@ -115,28 +100,14 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-semibold mb-4">{t('followUs')}</h4>
             <div className="flex gap-3 mb-4">
-              {socialLinks.map(social => {
-                const Icon = getIconForPlatform(social.platform);
-                return (
-                  <a 
-                    key={social.id} 
-                    href={social.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200" 
-                    aria-label={social.label}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </a>
-                );
-              })}
+              {socialLinks.map(social => <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200" aria-label={social.label}>
+                  <social.icon className="h-5 w-5" />
+                </a>)}
             </div>
-            {footerInfo && (
-              <div className="space-y-2 text-xs text-muted-foreground">
-                <p>Muallif: {footerInfo.author_name}</p>
-                <p>Yaratuvchi: {footerInfo.creator_name}</p>
-              </div>
-            )}
+            <div className="space-y-2 text-xs text-muted-foreground">
+              <p>Muallif: Shirin Erkinbayeva</p>
+              <p>Yaratuvchi: Bobur Jovliyev</p>
+            </div>
           </div>
         </div>
 
