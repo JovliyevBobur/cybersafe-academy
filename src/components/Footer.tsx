@@ -10,19 +10,19 @@ const Footer: React.FC = () => {
   } = useLanguage();
   const socialLinks = [{
     icon: Send,
-    href: 'https://t.me/cybersafe_edu',
+    href: 'https://t.me/ShirinErkinbayeva',
     label: 'Telegram'
   }, {
     icon: Github,
-    href: 'https://github.com/cybersafe-edu',
+    href: 'https://github.com/JBoburHacker005',
     label: 'GitHub'
   }, {
     icon: Mail,
-    href: 'mailto:info@cybersafe.uz',
+    href: 'mailto:jbobur2o1o@gmail.com',
     label: 'Email'
   }, {
     icon: Phone,
-    href: 'tel:+998901234567',
+    href: 'tel:+998930054287',
     label: 'Phone'
   }];
   const quickLinks = [{
