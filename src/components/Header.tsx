@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Shield, Sun, Moon, ChevronDown } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Shield, Sun, Moon, ChevronDown, LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 const languageFlags: Record<Language, { flag: string; name: string }> = {
@@ -31,7 +33,20 @@ const Header: React.FC = () => {
   const [isEducationOpen, setIsEducationOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+  const { user, logout, isAuthenticated } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const getLogoutText = () => {
+    if (t('home') === 'Home') return 'Logout';
+    if (t('home') === 'Главная') return 'Выход';
+    return 'Chiqish';
+  };
 
   const navItems = [
     { path: '/', label: t('home') },
@@ -167,16 +182,42 @@ const Header: React.FC = () => {
 
             {/* Auth Buttons */}
             <div className="hidden sm:flex items-center gap-2">
-              <Link to="/login">
-                <Button variant="ghost" size="sm">
-                  {t('login')}
-                </Button>
-              </Link>
-              <Link to="/register">
-                <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity">
-                  {t('register')}
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="gap-2">
+                      <div className="w-7 h-7 rounded-full bg-gradient-primary flex items-center justify-center">
+                        <User className="w-4 h-4 text-white" />
+                      </div>
+                      <span className="font-medium">{user?.name}</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="min-w-[160px]">
+                    <DropdownMenuItem className="text-muted-foreground">
+                      {user?.email}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleLogout} className="gap-2 cursor-pointer text-destructive focus:text-destructive">
+                      <LogOut className="w-4 h-4" />
+                      {getLogoutText()}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="ghost" size="sm">
+                      {t('login')}
+                    </Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity">
+                      {t('register')}
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Mobile Menu Toggle */}
@@ -245,16 +286,43 @@ const Header: React.FC = () => {
               ))}
             </nav>
             <div className="flex gap-2 mt-4 px-4">
-              <Link to="/login" className="flex-1" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="outline" className="w-full">
-                  {t('login')}
-                </Button>
-              </Link>
-              <Link to="/register" className="flex-1" onClick={() => setIsMenuOpen(false)}>
-                <Button className="w-full bg-gradient-primary">
-                  {t('register')}
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <div className="w-full">
+                  <div className="flex items-center gap-2 mb-3 px-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center">
+                      <User className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-sm">{user?.name}</p>
+                      <p className="text-xs text-muted-foreground">{user?.email}</p>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    className="w-full gap-2 text-destructive border-destructive/30 hover:bg-destructive/10"
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    {getLogoutText()}
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <Link to="/login" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      {t('login')}
+                    </Button>
+                  </Link>
+                  <Link to="/register" className="flex-1" onClick={() => setIsMenuOpen(false)}>
+                    <Button className="w-full bg-gradient-primary">
+                      {t('register')}
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
