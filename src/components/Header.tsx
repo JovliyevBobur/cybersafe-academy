@@ -80,8 +80,8 @@ const Header: React.FC = () => {
               <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <span className="font-bold text-xl hidden sm:block">
-              <span className="text-gradient">Cyber</span>
-              <span className="text-foreground">Guard</span>
+              <span className="text-gradient">CyberSafe</span>
+              <span className="text-foreground"> Edu</span>
             </span>
           </Link>
 

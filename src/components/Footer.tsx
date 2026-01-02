@@ -47,8 +47,8 @@ const Footer: React.FC = () => {
             <Link to="/" className="flex items-center gap-2">
               <Shield className="h-8 w-8 text-primary" />
               <span className="font-bold text-xl">
-                <span className="text-gradient">Cyber</span>
-                <span className="text-foreground">Guard</span>
+                <span className="text-gradient">CyberSafe</span>
+                <span className="text-foreground"> Edu</span>
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-sm">
-              © {new Date().getFullYear()} CyberGuard. {t('rights')}.
+              © {new Date().getFullYear()} CyberSafe Edu. {t('rights')}.
             </p>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               

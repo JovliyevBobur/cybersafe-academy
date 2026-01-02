@@ -38,7 +38,7 @@ const HeroSection: React.FC = () => {
           <div className="space-y-8 animate-slide-up">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
               <Shield className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Cyber Security Platform</span>
+              <span className="text-sm font-medium text-primary">CyberSafe Edu Platform</span>
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
