@@ -1,28 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Github, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Send, Github, Mail, Phone } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import logo from '@/assets/logo.png';
+
 const Footer: React.FC = () => {
   const {
     t
   } = useLanguage();
   const socialLinks = [{
+    icon: Send,
+    href: 'https://t.me/cybersafe_edu',
+    label: 'Telegram'
+  }, {
     icon: Github,
-    href: '#',
+    href: 'https://github.com/cybersafe-edu',
     label: 'GitHub'
   }, {
-    icon: Twitter,
-    href: '#',
-    label: 'Twitter'
+    icon: Mail,
+    href: 'mailto:info@cybersafe.uz',
+    label: 'Email'
   }, {
-    icon: Linkedin,
-    href: '#',
-    label: 'LinkedIn'
-  }, {
-    icon: Youtube,
-    href: '#',
-    label: 'YouTube'
+    icon: Phone,
+    href: 'tel:+998901234567',
+    label: 'Phone'
   }];
   const quickLinks = [{
     path: '/',
