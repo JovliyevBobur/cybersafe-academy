@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Shield, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 const Login: React.FC = () => {
   const { t } = useLanguage();
+  const { login } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -28,12 +31,17 @@ const Login: React.FC = () => {
     
     await new Promise(resolve => setTimeout(resolve, 1000));
     
+    // Extract name from email for demo (in real app, this would come from backend)
+    const userName = formData.email.split('@')[0];
+    login(userName, formData.email);
+    
     toast({
       title: getLang() === 'en' ? 'Login Successful!' : getLang() === 'ru' ? 'Вход выполнен!' : 'Muvaffaqiyatli kirildi!',
       description: getLang() === 'en' ? 'Welcome back!' : getLang() === 'ru' ? 'Добро пожаловать!' : 'Xush kelibsiz!',
     });
     
     setIsSubmitting(false);
+    navigate('/');
   };
 
   return (

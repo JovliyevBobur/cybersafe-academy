@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Shield, Mail, Lock, Eye, EyeOff, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
 const Register: React.FC = () => {
   const { t } = useLanguage();
+  const { login } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -39,12 +42,15 @@ const Register: React.FC = () => {
     setIsSubmitting(true);
     await new Promise(resolve => setTimeout(resolve, 1000));
     
+    login(formData.name, formData.email);
+    
     toast({
       title: getLang() === 'en' ? 'Registration Successful!' : getLang() === 'ru' ? 'Регистрация успешна!' : "Ro'yxatdan o'tildi!",
       description: getLang() === 'en' ? 'Welcome to CyberGuard!' : getLang() === 'ru' ? 'Добро пожаловать в CyberGuard!' : 'CyberGuard ga xush kelibsiz!',
     });
     
     setIsSubmitting(false);
+    navigate('/');
   };
 
   return (
