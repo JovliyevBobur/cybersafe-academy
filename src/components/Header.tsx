@@ -81,7 +81,7 @@ const Header: React.FC = () => {
               alt="CyberSafe Edu" 
               className="h-10 w-10 rounded-full object-cover border-2 border-border transition-transform duration-300 group-hover:scale-105"
             />
-            <span className="font-bold text-xl hidden sm:block">
+            <span className="font-bold text-xl block">
               <span className="text-gradient">CyberSafe</span>
               <span className="text-foreground"> Edu</span>
             </span>
