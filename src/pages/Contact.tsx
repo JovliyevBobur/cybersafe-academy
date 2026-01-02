@@ -47,17 +47,17 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email',
-      value: 'info@cybersafe-edu.uz',
+      value: 'jbobur2o1o@gmail.com',
     },
     {
       icon: Phone,
       title: getLang() === 'en' ? 'Phone' : getLang() === 'ru' ? 'Телефон' : 'Telefon',
-      value: '+998 90 123 45 67',
+      value: '+998 (93) 005-42-87',
     },
     {
       icon: MapPin,
       title: getLang() === 'en' ? 'Address' : getLang() === 'ru' ? 'Адрес' : 'Manzil',
-      value: getLang() === 'en' ? 'Tashkent, Uzbekistan' : getLang() === 'ru' ? 'Ташкент, Узбекистан' : 'Toshkent, O\'zbekiston',
+      value: getLang() === 'en' ? 'Khorezm, Uzbekistan' : getLang() === 'ru' ? 'Хорезм, Узбекистан' : 'Xorazm, O\'zbekiston',
     },
   ];
 
