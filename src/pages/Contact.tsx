@@ -177,28 +177,28 @@ const Contact: React.FC = () => {
                     Telegram
                   </a>
                   <a
-                    href="#"
+                    href="https://github.com/JBoburHacker005"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
                   >
-                    Instagram
+                    GitHub
                   </a>
                   <a
-                    href="#"
+                    href="mailto:jbobur2o1o@gmail.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
                   >
-                    YouTube
+                    Email
                   </a>
                   <a
-                    href="#"
+                    href="tel:+998930054287"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 rounded-lg bg-muted text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors text-sm"
                   >
-                    Facebook
+                    Phone
                   </a>
                 </div>
               </div>
