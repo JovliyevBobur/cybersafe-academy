@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Github, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Github, Twitter, Linkedin, Youtube } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import logo from '@/assets/logo.png';
 const Footer: React.FC = () => {
   const {
     t
@@ -45,7 +46,11 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <Shield className="h-8 w-8 text-primary" />
+              <img 
+                src={logo} 
+                alt="CyberSafe Edu" 
+                className="h-10 w-10 rounded-full object-cover"
+              />
               <span className="font-bold text-xl">
                 <span className="text-gradient">CyberSafe</span>
                 <span className="text-foreground"> Edu</span>

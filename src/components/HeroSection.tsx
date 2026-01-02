@@ -79,35 +79,63 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Illustration */}
+          {/* Illustration - Enhanced Cyber Style */}
           <div className="relative hidden lg:block">
+            {/* Grid background effect */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="w-full h-full" style={{
+                backgroundImage: 'linear-gradient(rgba(0, 255, 195, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 195, 0.1) 1px, transparent 1px)',
+                backgroundSize: '40px 40px'
+              }} />
+            </div>
+            
             <div className="relative z-10">
               <div className="w-full aspect-square max-w-lg mx-auto relative">
-                {/* Central shield */}
+                {/* Glow effect behind central element */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 rounded-3xl bg-gradient-primary shadow-glow flex items-center justify-center transform rotate-12 hover:rotate-0 transition-transform duration-500">
-                    <Shield className="w-32 h-32 text-white" />
+                  <div className="w-72 h-72 rounded-3xl bg-accent/20 blur-3xl animate-pulse-glow" />
+                </div>
+                
+                {/* Central shield card */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-56 h-56 rounded-3xl bg-gradient-to-br from-primary via-accent to-accent shadow-glow flex items-center justify-center transform rotate-6 hover:rotate-0 transition-all duration-500 hover:scale-105">
+                    <div className="w-48 h-48 rounded-2xl bg-gradient-to-br from-primary/20 to-transparent backdrop-blur-sm flex items-center justify-center border border-white/20">
+                      <Shield className="w-24 h-24 text-white drop-shadow-lg" strokeWidth={1.5} />
+                    </div>
                   </div>
                 </div>
                 
-                {/* Orbiting elements */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4">
-                  <div className="w-20 h-20 rounded-2xl bg-card shadow-card flex items-center justify-center animate-float">
-                    <Lock className="w-10 h-10 text-primary" />
+                {/* Floating Lock icon - top */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <div className="w-14 h-14 rounded-xl bg-card/80 backdrop-blur-md shadow-lg border border-border/50 flex items-center justify-center animate-float">
+                    <Lock className="w-7 h-7 text-muted-foreground" strokeWidth={1.5} />
                   </div>
                 </div>
                 
-                <div className="absolute bottom-0 left-0 translate-y-4">
-                  <div className="w-16 h-16 rounded-2xl bg-card shadow-card flex items-center justify-center animate-float" style={{ animationDelay: '1s' }}>
-                    <Eye className="w-8 h-8 text-accent" />
+                {/* Floating Shield outline - top left */}
+                <div className="absolute top-16 -left-4">
+                  <div className="w-12 h-12 flex items-center justify-center animate-float opacity-40" style={{ animationDelay: '0.5s' }}>
+                    <Shield className="w-10 h-10 text-primary/50" strokeWidth={1} />
                   </div>
                 </div>
                 
-                <div className="absolute bottom-1/4 right-0 translate-x-4">
-                  <div className="w-18 h-18 rounded-2xl bg-card shadow-card flex items-center justify-center animate-float" style={{ animationDelay: '2s' }}>
-                    <Fingerprint className="w-9 h-9 text-primary" />
+                {/* Floating Eye icon - bottom left */}
+                <div className="absolute bottom-8 left-4">
+                  <div className="w-14 h-14 rounded-xl bg-card/80 backdrop-blur-md shadow-lg border border-accent/30 flex items-center justify-center animate-float" style={{ animationDelay: '1s' }}>
+                    <Eye className="w-7 h-7 text-accent" strokeWidth={1.5} />
                   </div>
                 </div>
+                
+                {/* Floating Fingerprint icon - right */}
+                <div className="absolute bottom-1/3 -right-2">
+                  <div className="w-14 h-14 rounded-xl bg-card/80 backdrop-blur-md shadow-lg border border-primary/30 flex items-center justify-center animate-float" style={{ animationDelay: '1.5s' }}>
+                    <Fingerprint className="w-7 h-7 text-primary" strokeWidth={1.5} />
+                  </div>
+                </div>
+                
+                {/* Corner accent squares */}
+                <div className="absolute bottom-20 left-20 w-8 h-8 border border-primary/30 rounded-lg transform rotate-12 opacity-50" />
+                <div className="absolute top-28 right-16 w-6 h-6 border border-accent/30 rounded-md transform -rotate-12 opacity-50" />
               </div>
             </div>
           </div>
