@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Shield, Sun, Moon, ChevronDown, LogOut, User } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronDown, LogOut, User } from 'lucide-react';
+import logo from '@/assets/logo.png';
 import { Button } from '@/components/ui/button';
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -75,10 +76,11 @@ const Header: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="relative">
-              <Shield className="h-8 w-8 text-primary transition-all duration-300 group-hover:text-accent" />
-              <div className="absolute inset-0 bg-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
+            <img 
+              src={logo} 
+              alt="CyberSafe Edu" 
+              className="h-10 w-10 rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
             <span className="font-bold text-xl hidden sm:block">
               <span className="text-gradient">CyberSafe</span>
               <span className="text-foreground"> Edu</span>
