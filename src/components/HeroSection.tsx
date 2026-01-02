@@ -99,11 +99,11 @@ const HeroSection: React.FC = () => {
                 
                 {/* Central Logo */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-60 h-60 rounded-3xl bg-gradient-to-br from-primary via-accent to-accent shadow-glow flex items-center justify-center transform rotate-6 hover:rotate-0 transition-all duration-500 hover:scale-105">
+                  <div className="w-60 h-60 rounded-full bg-gradient-to-br from-primary via-accent to-accent shadow-glow flex items-center justify-center transform rotate-6 hover:rotate-0 transition-all duration-500 hover:scale-105">
                     <img 
                       src={logo} 
                       alt="CyberSafe Edu" 
-                      className="w-52 h-52 rounded-2xl object-cover"
+                      className="w-52 h-52 rounded-full object-cover"
                     />
                   </div>
                 </div>
