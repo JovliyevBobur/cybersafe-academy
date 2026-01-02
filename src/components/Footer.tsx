@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
               <img 
                 src={logo} 
                 alt="CyberSafe Edu" 
-                className="h-10 w-10 rounded-full object-cover"
+                className="h-10 w-10 rounded-full object-cover border-2 border-border"
               />
               <span className="font-bold text-xl">
                 <span className="text-gradient">CyberSafe</span>
