@@ -46,7 +46,7 @@ const Register: React.FC = () => {
     
     toast({
       title: getLang() === 'en' ? 'Registration Successful!' : getLang() === 'ru' ? 'Регистрация успешна!' : "Ro'yxatdan o'tildi!",
-      description: getLang() === 'en' ? 'Welcome to CyberGuard!' : getLang() === 'ru' ? 'Добро пожаловать в CyberGuard!' : 'CyberGuard ga xush kelibsiz!',
+      description: getLang() === 'en' ? 'Welcome to CyberSafe Edu!' : getLang() === 'ru' ? 'Добро пожаловать в CyberSafe Edu!' : 'CyberSafe Edu ga xush kelibsiz!',
     });
     
     setIsSubmitting(false);
@@ -63,8 +63,8 @@ const Register: React.FC = () => {
           <Link to="/" className="inline-flex items-center gap-2">
             <Shield className="h-10 w-10 text-primary" />
             <span className="font-bold text-2xl">
-              <span className="text-gradient">Cyber</span>
-              <span className="text-foreground">Guard</span>
+              <span className="text-gradient">CyberSafe</span>
+              <span className="text-foreground"> Edu</span>
             </span>
           </Link>
         </div>

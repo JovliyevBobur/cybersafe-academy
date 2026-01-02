@@ -18,12 +18,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('cyberguard_user');
+    const savedUser = localStorage.getItem('cybersafe_edu_user');
     if (savedUser) {
       try {
         setUser(JSON.parse(savedUser));
       } catch {
-        localStorage.removeItem('cyberguard_user');
+        localStorage.removeItem('cybersafe_edu_user');
       }
     }
   }, []);
@@ -31,12 +31,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = (name: string, email: string) => {
     const userData = { name, email };
     setUser(userData);
-    localStorage.setItem('cyberguard_user', JSON.stringify(userData));
+    localStorage.setItem('cybersafe_edu_user', JSON.stringify(userData));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('cyberguard_user');
+    localStorage.removeItem('cybersafe_edu_user');
   };
 
   return (

@@ -47,7 +47,7 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email',
-      value: 'info@cyberguard.uz',
+      value: 'info@cybersafe-edu.uz',
     },
     {
       icon: Phone,
