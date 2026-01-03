@@ -1,14 +1,24 @@
-import React from 'react';
-import { Gamepad2, Trophy, Users, Zap } from 'lucide-react';
+import React, { useState } from 'react';
+import { Gamepad2, Trophy, Users, Zap, ArrowLeft } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
+import PhishingDetective from '@/components/games/PhishingDetective';
+import PasswordFortress from '@/components/games/PasswordFortress';
+import SafeLink from '@/components/games/SafeLink';
+import CyberDefense from '@/components/games/CyberDefense';
+import Minesweeper from '@/components/games/Minesweeper';
+import ConnectingGame from '@/components/games/ConnectingGame';
+
+type GameType = null | 'phishing' | 'password' | 'safelink' | 'defense' | 'minesweeper' | 'connecting';
 
 const Games: React.FC = () => {
   const { t } = useLanguage();
+  const [activeGame, setActiveGame] = useState<GameType>(null);
 
   const games = [
     {
+      id: 'phishing' as const,
       title: { uz: "Phishing Detektiv", en: "Phishing Detective", ru: "Фишинг Детектив" },
       description: { 
         uz: "Haqiqiy va soxta xabarlarni aniqlang", 
@@ -20,6 +30,7 @@ const Games: React.FC = () => {
       difficulty: { uz: "Oson", en: "Easy", ru: "Легкий" },
     },
     {
+      id: 'password' as const,
       title: { uz: "Parol Qal'asi", en: "Password Fortress", ru: "Крепость Паролей" },
       description: { 
         uz: "Kuchli parollar yarating va himoya qiling", 
@@ -31,6 +42,7 @@ const Games: React.FC = () => {
       difficulty: { uz: "O'rtacha", en: "Medium", ru: "Средний" },
     },
     {
+      id: 'safelink' as const,
       title: { uz: "Xavfsiz Link", en: "Safe Link", ru: "Безопасная ссылка" },
       description: { 
         uz: "Xavfli va xavfsiz linklar", 
@@ -42,6 +54,7 @@ const Games: React.FC = () => {
       difficulty: { uz: "Oson", en: "Easy", ru: "Легкий" },
     },
     {
+      id: 'defense' as const,
       title: { uz: "Kiber Mudofaa", en: "Cyber Defense", ru: "Кибер Защита" },
       description: { 
         uz: "Tizimni hujumlardan himoya qiling", 
@@ -52,6 +65,30 @@ const Games: React.FC = () => {
       players: "1.2K",
       difficulty: { uz: "Qiyin", en: "Hard", ru: "Сложный" },
     },
+    {
+      id: 'minesweeper' as const,
+      title: { uz: "Minesweeper", en: "Minesweeper Game", ru: "Сапёр" },
+      description: { 
+        uz: "Minalarni topib, xavfsiz maydonni oching", 
+        en: "Find mines and clear the safe field", 
+        ru: "Найдите мины и очистите безопасное поле" 
+      },
+      icon: "💣",
+      players: "4.2K",
+      difficulty: { uz: "O'rtacha", en: "Medium", ru: "Средний" },
+    },
+    {
+      id: 'connecting' as const,
+      title: { uz: "Connecting Game", en: "Connecting Game", ru: "Игра на соединение" },
+      description: { 
+        uz: "Bir xil belgilarni toping va juftlang", 
+        en: "Find and match identical symbols", 
+        ru: "Найдите и соедините одинаковые символы" 
+      },
+      icon: "🧩",
+      players: "2.8K",
+      difficulty: { uz: "Oson", en: "Easy", ru: "Легкий" },
+    },
   ];
 
   const getLang = () => {
@@ -59,6 +96,45 @@ const Games: React.FC = () => {
     if (t('home') === 'Главная') return 'ru';
     return 'uz';
   };
+
+  const renderGame = () => {
+    switch (activeGame) {
+      case 'phishing':
+        return <PhishingDetective onBack={() => setActiveGame(null)} />;
+      case 'password':
+        return <PasswordFortress onBack={() => setActiveGame(null)} />;
+      case 'safelink':
+        return <SafeLink onBack={() => setActiveGame(null)} />;
+      case 'defense':
+        return <CyberDefense onBack={() => setActiveGame(null)} />;
+      case 'minesweeper':
+        return <Minesweeper onBack={() => setActiveGame(null)} />;
+      case 'connecting':
+        return <ConnectingGame onBack={() => setActiveGame(null)} />;
+      default:
+        return null;
+    }
+  };
+
+  if (activeGame) {
+    return (
+      <Layout>
+        <section className="py-8 bg-background min-h-[80vh]">
+          <div className="container mx-auto px-4">
+            <Button 
+              variant="ghost" 
+              onClick={() => setActiveGame(null)}
+              className="mb-6"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {getLang() === 'en' ? 'Back to Games' : getLang() === 'ru' ? 'К играм' : "O'yinlarga qaytish"}
+            </Button>
+            {renderGame()}
+          </div>
+        </section>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -86,7 +162,7 @@ const Games: React.FC = () => {
       {/* Games */}
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {games.map((game, index) => (
               <div 
                 key={index} 
@@ -115,7 +191,11 @@ const Games: React.FC = () => {
                           <span>+50 XP</span>
                         </div>
                       </div>
-                      <Button size="sm" className="bg-gradient-primary hover:opacity-90">
+                      <Button 
+                        size="sm" 
+                        className="bg-gradient-primary hover:opacity-90"
+                        onClick={() => setActiveGame(game.id)}
+                      >
                         <Zap className="w-4 h-4 mr-1" />
                         {getLang() === 'en' ? 'Play' : getLang() === 'ru' ? 'Играть' : "O'ynash"}
                       </Button>
