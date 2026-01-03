@@ -8,6 +8,7 @@ interface Card {
   value: string;
   name: string;
   color: string;
+  imageUrl: string;
   isFlipped: boolean;
   isMatched: boolean;
 }
@@ -16,40 +17,40 @@ interface Props {
   onBack: () => void;
 }
 
-// Tech icons with colors and names
-const techIcons: Array<{ value: string; name: string; color: string }> = [
-  { value: 'JS', name: 'JavaScript', color: '#F7DF1E' },
-  { value: 'PY', name: 'Python', color: '#3776AB' },
-  { value: 'TS', name: 'TypeScript', color: '#3178C6' },
-  { value: 'RE', name: 'React', color: '#61DAFB' },
-  { value: 'NG', name: 'Angular', color: '#DD0031' },
-  { value: 'VU', name: 'Vue', color: '#4FC08D' },
-  { value: 'HT', name: 'HTML5', color: '#E34F26' },
-  { value: 'CS', name: 'CSS3', color: '#1572B6' },
-  { value: 'NO', name: 'Node', color: '#339933' },
-  { value: 'GO', name: 'Go', color: '#00ADD8' },
-  { value: 'JA', name: 'Java', color: '#ED8B00' },
-  { value: 'PH', name: 'PHP', color: '#777BB4' },
-  { value: 'RU', name: 'Ruby', color: '#CC342D' },
-  { value: 'SW', name: 'Swift', color: '#FA7343' },
-  { value: 'C#', name: 'C#', color: '#239120' },
-  { value: 'DO', name: 'Docker', color: '#2496ED' },
-  { value: 'KU', name: 'K8s', color: '#326CE5' },
-  { value: 'GH', name: 'GitHub', color: '#181717' },
-  { value: 'VS', name: 'VS Code', color: '#007ACC' },
-  { value: 'AW', name: 'AWS', color: '#FF9900' },
-  { value: 'AZ', name: 'Azure', color: '#0078D4' },
-  { value: 'GC', name: 'GCloud', color: '#4285F4' },
-  { value: 'LI', name: 'Linux', color: '#FCC624' },
-  { value: 'WI', name: 'Windows', color: '#0078D6' },
-  { value: 'AN', name: 'Android', color: '#3DDC84' },
-  { value: 'AP', name: 'Apple', color: '#000000' },
-  { value: 'BO', name: 'Bootstrap', color: '#7952B3' },
-  { value: 'SV', name: 'Svelte', color: '#FF3E00' },
-  { value: 'RE', name: 'Redux', color: '#764ABC' },
-  { value: 'UN', name: 'Unity', color: '#000000' },
-  { value: 'BL', name: 'Blender', color: '#F5792A' },
-  { value: 'UE', name: 'Unreal', color: '#313131' },
+// Tech icons with colors, names, and logo URLs
+const techIcons: Array<{ value: string; name: string; color: string; imageUrl: string }> = [
+  { value: 'JS', name: 'JavaScript', color: '#F7DF1E', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { value: 'PY', name: 'Python', color: '#3776AB', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { value: 'TS', name: 'TypeScript', color: '#3178C6', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
+  { value: 'RE', name: 'React', color: '#61DAFB', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { value: 'NG', name: 'Angular', color: '#DD0031', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg' },
+  { value: 'VU', name: 'Vue', color: '#4FC08D', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+  { value: 'HT', name: 'HTML5', color: '#E34F26', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+  { value: 'CS', name: 'CSS3', color: '#1572B6', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+  { value: 'NO', name: 'Node', color: '#339933', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  { value: 'GO', name: 'Go', color: '#00ADD8', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg' },
+  { value: 'JA', name: 'Java', color: '#ED8B00', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
+  { value: 'PH', name: 'PHP', color: '#777BB4', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
+  { value: 'RU', name: 'Ruby', color: '#CC342D', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg' },
+  { value: 'SW', name: 'Swift', color: '#FA7343', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg' },
+  { value: 'C#', name: 'C#', color: '#239120', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
+  { value: 'DO', name: 'Docker', color: '#2496ED', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+  { value: 'KU', name: 'K8s', color: '#326CE5', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg' },
+  { value: 'GH', name: 'GitHub', color: '#181717', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
+  { value: 'VS', name: 'VS Code', color: '#007ACC', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original-wordmark.svg' },
+  { value: 'AW', name: 'AWS', color: '#FF9900', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg' },
+  { value: 'AZ', name: 'Azure', color: '#0078D4', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg' },
+  { value: 'GC', name: 'GCloud', color: '#4285F4', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg' },
+  { value: 'LI', name: 'Linux', color: '#FCC624', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg' },
+  { value: 'WI', name: 'Windows', color: '#0078D6', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg' },
+  { value: 'AN', name: 'Android', color: '#3DDC84', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg' },
+  { value: 'AP', name: 'Apple', color: '#000000', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original-wordmark.svg' },
+  { value: 'BO', name: 'Bootstrap', color: '#7952B3', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
+  { value: 'SV', name: 'Svelte', color: '#FF3E00', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg' },
+  { value: 'RX', name: 'Redux', color: '#764ABC', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg' },
+  { value: 'UN', name: 'Unity', color: '#000000', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg' },
+  { value: 'BL', name: 'Blender', color: '#F5792A', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg' },
+  { value: 'UE', name: 'Unreal', color: '#313131', imageUrl: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unrealengine/unrealengine-original.svg' },
 ];
 
 const ConnectingGame: React.FC<Props> = ({ onBack }) => {
@@ -66,6 +67,7 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [pairsLeft, setPairsLeft] = useState(0);
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 
   const getLang = () => {
     if (t('home') === 'Home') return 'en';
@@ -88,6 +90,7 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
         value: icon.value,
         name: icon.name,
         color: icon.color,
+        imageUrl: icon.imageUrl,
         isFlipped: false,
         isMatched: false,
       }))
@@ -104,6 +107,7 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
     setGameWon(false);
     setPairsLeft(iconsForLevel.length);
     setScore(0);
+    setImageErrors(new Set());
   }, [level]);
 
   useEffect(() => {
@@ -409,20 +413,37 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
               }}
             >
               {card.isFlipped || card.isMatched ? (
-                <>
-                  <div
-                    className="text-2xl font-bold mb-1"
-                    style={{ color: card.color }}
-                  >
-                    {card.value}
+                <div className="w-full h-full flex flex-col items-center justify-center p-2">
+                  <div className="w-12 h-12 flex items-center justify-center mb-1">
+                    {imageErrors.has(card.id) ? (
+                      <div
+                        className="w-full h-full flex items-center justify-center rounded"
+                        style={{
+                          backgroundColor: card.color + '20',
+                          color: card.color,
+                        }}
+                      >
+                        <span className="text-lg font-bold">{card.value}</span>
+                      </div>
+                    ) : (
+                      <img
+                        src={card.imageUrl}
+                        alt={card.name}
+                        className="w-full h-full object-contain"
+                        style={{ filter: 'drop-shadow(0 0 8px ' + card.color + '80)' }}
+                        onError={() => {
+                          setImageErrors(prev => new Set(prev).add(card.id));
+                        }}
+                      />
+                    )}
                   </div>
-                  <div className="text-xs text-muted-foreground text-center px-1">
+                  <div className="text-xs text-muted-foreground text-center px-1 font-medium">
                     {card.name}
                   </div>
-                </>
+                </div>
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-8 h-8 rounded bg-muted-foreground/20" />
+                  <div className="w-10 h-10 rounded-lg bg-muted-foreground/20 border border-border/50" />
                 </div>
               )}
             </button>
@@ -434,3 +455,4 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
 };
 
 export default ConnectingGame;
+
