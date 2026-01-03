@@ -114,6 +114,10 @@ const Footer: React.FC = () => {
                   src="/shirin.jpg" 
                   alt="Shirin Erkinbayeva" 
                   className="w-14 h-14 rounded-full object-cover border-2 border-primary/50 shadow-md"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
                 />
               </div>
               <div className="flex items-center justify-between gap-3">
@@ -125,6 +129,10 @@ const Footer: React.FC = () => {
                   src="/bobur.jpg" 
                   alt="Bobur Jovliyev" 
                   className="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-md"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
                 />
               </div>
             </div>
