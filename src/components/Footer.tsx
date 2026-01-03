@@ -104,9 +104,29 @@ const Footer: React.FC = () => {
                   <social.icon className="h-5 w-5" />
                 </a>)}
             </div>
-            <div className="space-y-2 text-xs text-muted-foreground">
-              <p>Muallif: Shirin Erkinbayeva</p>
-              <p>Yaratuvchi: Bobur Jovliyev</p>
+            <div className="space-y-3 text-lg" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-primary font-bold" style={{ fontSize: '1.1rem' }}>Muallif:</span>
+                  <span className="text-foreground font-medium">Shirin Erkinbayeva</span>
+                </div>
+                <img 
+                  src="/shirin.jpg" 
+                  alt="Shirin Erkinbayeva" 
+                  className="w-14 h-14 rounded-full object-cover border-2 border-primary/50 shadow-md"
+                />
+              </div>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-accent font-bold" style={{ fontSize: '1.1rem' }}>Yaratuvchi:</span>
+                  <span className="text-foreground font-medium">Bobur Jovliyev</span>
+                </div>
+                <img 
+                  src="/bobur.jpg" 
+                  alt="Bobur Jovliyev" 
+                  className="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-md"
+                />
+              </div>
             </div>
           </div>
         </div>
