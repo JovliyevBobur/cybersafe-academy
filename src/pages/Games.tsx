@@ -11,8 +11,9 @@ import Minesweeper from '@/components/games/Minesweeper';
 import ConnectingGame from '@/components/games/ConnectingGame';
 import TicTacToe from '@/components/games/TicTacToe';
 import Tetris from '@/components/games/Tetris';
+import Ballz from '@/components/games/Ballz';
 
-type GameType = null | 'phishing' | 'password' | 'safelink' | 'defense' | 'minesweeper' | 'connecting' | 'tictactoe' | 'tetris';
+type GameType = null | 'phishing' | 'password' | 'safelink' | 'defense' | 'minesweeper' | 'connecting' | 'tictactoe' | 'tetris' | 'ballz';
 
 const Games: React.FC = () => {
   const { t } = useLanguage();
@@ -115,6 +116,18 @@ const Games: React.FC = () => {
       players: "6.1K",
       difficulty: { uz: "O'rtacha", en: "Medium", ru: "Средний" },
     },
+    {
+      id: 'ballz' as const,
+      title: { uz: "Ballz Game", en: "Ballz Game", ru: "Игра с шарами" },
+      description: { 
+        uz: "To'plarni otib, tushayotgan to'plarni yo'q qiling", 
+        en: "Shoot balls and destroy falling balls", 
+        ru: "Стреляйте шарами и уничтожайте падающие шары" 
+      },
+      icon: "⚽",
+      players: "4.5K",
+      difficulty: { uz: "O'rtacha", en: "Medium", ru: "Средний" },
+    },
   ];
 
   const getLang = () => {
@@ -141,6 +154,8 @@ const Games: React.FC = () => {
         return <TicTacToe onBack={() => setActiveGame(null)} />;
       case 'tetris':
         return <Tetris onBack={() => setActiveGame(null)} />;
+      case 'ballz':
+        return <Ballz onBack={() => setActiveGame(null)} />;
       default:
         return null;
     }

@@ -61,7 +61,7 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
   const [matches, setMatches] = useState(0);
   const [level, setLevel] = useState(1);
   const [score, setScore] = useState(0);
-  const [lives, setLives] = useState(3);
+  const [lives, setLives] = useState(20);
   const [hints, setHints] = useState(3);
   const [isPaused, setIsPaused] = useState(false);
   const [gameOver, setGameOver] = useState(false);
@@ -100,7 +100,7 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
     setFlippedCards([]);
     setMoves(0);
     setMatches(0);
-    setLives(3);
+    setLives(20);
     setHints(3);
     setIsPaused(false);
     setGameOver(false);
@@ -315,10 +315,10 @@ const ConnectingGame: React.FC<Props> = ({ onBack }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {[1, 2, 3].map((i) => (
+            {Array.from({ length: 20 }, (_, i) => i + 1).map((i) => (
               <Heart
                 key={i}
-                className={`w-6 h-6 ${i <= lives ? 'text-red-500 fill-red-500' : 'text-muted-foreground'}`}
+                className={`w-5 h-5 ${i <= lives ? 'text-red-500 fill-red-500' : 'text-muted-foreground'}`}
               />
             ))}
             <Button
