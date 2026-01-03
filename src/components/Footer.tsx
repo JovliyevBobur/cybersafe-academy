@@ -4,6 +4,11 @@ import { Send, Github, Mail, Phone } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import logo from '@/assets/logo.png';
 
+// Import images - these will be bundled by Vite and work on Vercel
+// Make sure shirin.jpg and bobur.jpg are in src/assets folder
+import shirinImage from '@/assets/shirin.jpg';
+import boburImage from '@/assets/bobur.jpg';
+
 const Footer: React.FC = () => {
   const {
     t
@@ -111,9 +116,13 @@ const Footer: React.FC = () => {
                   <span className="text-foreground font-medium">Shirin Erkinbayeva</span>
                 </div>
                 <img 
-                  src="/shirin.jpg"
+                  src={shirinImage}
                   alt="Shirin Erkinbayeva" 
                   className="w-14 h-14 rounded-full object-cover border-2 border-primary/50 shadow-md"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/shirin.jpg';
+                  }}
                 />
               </div>
               <div className="flex items-center justify-between gap-3">
@@ -122,9 +131,13 @@ const Footer: React.FC = () => {
                   <span className="text-foreground font-medium">Bobur Jovliyev</span>
                 </div>
                 <img 
-                  src="/bobur.jpg"
+                  src={boburImage}
                   alt="Bobur Jovliyev" 
                   className="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-md"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = '/bobur.jpg';
+                  }}
                 />
               </div>
             </div>
