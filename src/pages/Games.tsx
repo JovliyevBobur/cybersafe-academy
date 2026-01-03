@@ -81,11 +81,11 @@ const Games: React.FC = () => {
     },
     {
       id: 'connecting' as const,
-      title: { uz: "Connecting Game", en: "Connecting Game", ru: "Игра на соединение" },
+      title: { uz: "Neon Tech Matching", en: "Neon Tech Matching", ru: "Неоновое Техно Совпадение" },
       description: { 
-        uz: "Bir xil belgilarni toping va juftlang", 
-        en: "Find and match identical symbols", 
-        ru: "Найдите и соедините одинаковые символы" 
+        uz: "Texnologiya logolarini toping va juftlang", 
+        en: "Find and match technology logos", 
+        ru: "Найдите и соедините логотипы технологий" 
       },
       icon: "🧩",
       players: "2.8K",
