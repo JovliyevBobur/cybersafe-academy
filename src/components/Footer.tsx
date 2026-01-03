@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Send, Github, Mail, Phone } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import logo from '@/assets/logo.png';
+import shirinImage from '@/assets/shirin.jpg';
+import boburImage from '@/assets/bobur.jpg';
 
 const Footer: React.FC = () => {
   const {
@@ -111,13 +113,9 @@ const Footer: React.FC = () => {
                   <span className="text-foreground font-medium">Shirin Erkinbayeva</span>
                 </div>
                 <img 
-                  src="/shirin.jpg" 
+                  src={shirinImage} 
                   alt="Shirin Erkinbayeva" 
                   className="w-14 h-14 rounded-full object-cover border-2 border-primary/50 shadow-md"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
                 />
               </div>
               <div className="flex items-center justify-between gap-3">
@@ -126,13 +124,9 @@ const Footer: React.FC = () => {
                   <span className="text-foreground font-medium">Bobur Jovliyev</span>
                 </div>
                 <img 
-                  src="/bobur.jpg" 
+                  src={boburImage} 
                   alt="Bobur Jovliyev" 
                   className="w-14 h-14 rounded-full object-cover border-2 border-accent/50 shadow-md"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
                 />
               </div>
             </div>
