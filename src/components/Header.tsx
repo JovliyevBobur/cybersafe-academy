@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Sun, Moon, ChevronDown, LogOut, User } from 'lucide-react';
-import logo from '@/assets/logo.png';
+const logo = '/favicon.ico';
 import { Button } from '@/components/ui/button';
 import { useLanguage, Language } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';

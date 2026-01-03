@@ -52,7 +52,11 @@ const Login: React.FC = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2">
-            <Shield className="h-10 w-10 text-primary" />
+            <img 
+              src="/favicon.ico" 
+              alt="CyberSafe Edu" 
+              className="h-10 w-10 rounded-full object-cover"
+            />
             <span className="font-bold text-2xl">
               <span className="text-gradient">CyberSafe</span>
               <span className="text-foreground"> Edu</span>
