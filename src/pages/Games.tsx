@@ -9,8 +9,10 @@ import SafeLink from '@/components/games/SafeLink';
 import CyberDefense from '@/components/games/CyberDefense';
 import Minesweeper from '@/components/games/Minesweeper';
 import ConnectingGame from '@/components/games/ConnectingGame';
+import TicTacToe from '@/components/games/TicTacToe';
+import Tetris from '@/components/games/Tetris';
 
-type GameType = null | 'phishing' | 'password' | 'safelink' | 'defense' | 'minesweeper' | 'connecting';
+type GameType = null | 'phishing' | 'password' | 'safelink' | 'defense' | 'minesweeper' | 'connecting' | 'tictactoe' | 'tetris';
 
 const Games: React.FC = () => {
   const { t } = useLanguage();
@@ -89,6 +91,30 @@ const Games: React.FC = () => {
       players: "2.8K",
       difficulty: { uz: "Oson", en: "Easy", ru: "Легкий" },
     },
+    {
+      id: 'tictactoe' as const,
+      title: { uz: "Tic Tac Toe", en: "Tic Tac Toe", ru: "Крестики-нолики" },
+      description: { 
+        uz: "Klassik X va O o'yini", 
+        en: "Classic X and O game", 
+        ru: "Классическая игра X и O" 
+      },
+      icon: "⭕",
+      players: "5.2K",
+      difficulty: { uz: "Oson", en: "Easy", ru: "Легкий" },
+    },
+    {
+      id: 'tetris' as const,
+      title: { uz: "Tetris", en: "Tetris", ru: "Тетрис" },
+      description: { 
+        uz: "Shakllarni joylashtiring va qatorlarni to'ldiring", 
+        en: "Place shapes and complete lines", 
+        ru: "Размещайте фигуры и заполняйте линии" 
+      },
+      icon: "🎮",
+      players: "6.1K",
+      difficulty: { uz: "O'rtacha", en: "Medium", ru: "Средний" },
+    },
   ];
 
   const getLang = () => {
@@ -111,6 +137,10 @@ const Games: React.FC = () => {
         return <Minesweeper onBack={() => setActiveGame(null)} />;
       case 'connecting':
         return <ConnectingGame onBack={() => setActiveGame(null)} />;
+      case 'tictactoe':
+        return <TicTacToe onBack={() => setActiveGame(null)} />;
+      case 'tetris':
+        return <Tetris onBack={() => setActiveGame(null)} />;
       default:
         return null;
     }
