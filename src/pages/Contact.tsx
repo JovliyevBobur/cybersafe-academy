@@ -47,12 +47,12 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email',
-      value: 'jbobur2o1o@gmail.com',
+      value: 'erkinboyevashirin672@gmail.com',
     },
     {
       icon: Phone,
       title: getLang() === 'en' ? 'Phone' : getLang() === 'ru' ? 'Телефон' : 'Telefon',
-      value: '+998 (93) 005-42-87',
+      value: '+998 (97) 945-30-04',
     },
     {
       icon: MapPin,
