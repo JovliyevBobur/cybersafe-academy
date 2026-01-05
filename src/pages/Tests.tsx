@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Progress } from '@/components/ui/progress';
+import Certificate from '@/components/Certificate';
 
 interface Question {
   question: { uz: string; en: string; ru: string };
@@ -1552,6 +1553,23 @@ const Tests: React.FC = () => {
           </div>
         </section>
       </Layout>
+    );
+  }
+
+  // Certificate View
+  if (showCertificate && selectedTest) {
+    const score = calculateScore();
+    return (
+      <Certificate
+        testTitle={selectedTest.title[getLang()]}
+        score={score}
+        date={new Date().toLocaleDateString(getLang() === 'en' ? 'en-US' : getLang() === 'ru' ? 'ru-RU' : 'uz-UZ', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        })}
+        onClose={() => setShowCertificate(false)}
+      />
     );
   }
 
