@@ -3,6 +3,7 @@ import { ClipboardCheck, Clock, HelpCircle, Star, ArrowLeft, CheckCircle, XCircl
 import Layout from '@/components/Layout';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { Progress } from '@/components/ui/progress';
 import Certificate from '@/components/Certificate';
 
@@ -23,6 +24,7 @@ interface Test {
 
 const Tests: React.FC = () => {
   const { t } = useLanguage();
+  const { user } = useAuth();
   const [selectedTest, setSelectedTest] = useState<Test | null>(null);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
@@ -1503,6 +1505,11 @@ const Tests: React.FC = () => {
       day: 'numeric'
     });
 
+    const userName =
+      user?.name ||
+      user?.email ||
+      (getLang() === 'en' ? 'Student' : getLang() === 'ru' ? 'Студент' : "O'quvchi");
+
     return (
       <Layout>
         <section className="py-12 bg-background min-h-screen">
@@ -1521,7 +1528,7 @@ const Tests: React.FC = () => {
                   {getLang() === 'en' ? 'This certifies that' : getLang() === 'ru' ? 'Настоящим удостоверяется, что' : 'Ushbu sertifikat tasdiqlaydi'}
                 </p>
                 <p className="text-2xl font-bold text-foreground mb-4">
-                  {getLang() === 'en' ? 'Student' : getLang() === 'ru' ? 'Студент' : "O'quvchi"}
+                  {userName}
                 </p>
                 <p className="text-lg text-muted-foreground mb-2">
                   {getLang() === 'en' ? 'has successfully completed' : getLang() === 'ru' ? 'успешно завершил(а)' : 'muvaffaqiyatli yakunladi'}
