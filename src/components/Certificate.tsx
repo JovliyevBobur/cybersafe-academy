@@ -23,7 +23,7 @@ const Certificate: React.FC<CertificateProps> = ({ testTitle, score, date, onClo
     return 'uz';
   };
 
-  const userName = user?.name || user?.email || 'Foydalanuvchi';
+  const userName = user?.name || user?.email || 'Student';
 
   const handlePrint = () => {
     const printContent = certificateRef.current;
