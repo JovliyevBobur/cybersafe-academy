@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Download, Printer, Award } from 'lucide-react';
+import React from 'react';
+import { Download, Printer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -15,7 +15,6 @@ interface CertificateProps {
 const Certificate: React.FC<CertificateProps> = ({ testTitle, score, date, onClose }) => {
   const { user } = useAuth();
   const { t } = useLanguage();
-  const certificateRef = useRef<HTMLDivElement>(null);
 
   const getLang = () => {
     if (t('home') === 'Home') return 'en';
@@ -24,11 +23,9 @@ const Certificate: React.FC<CertificateProps> = ({ testTitle, score, date, onClo
   };
 
   const userName = user?.name || user?.email || (getLang() === 'en' ? 'Student' : getLang() === 'ru' ? 'Студент' : 'Foydalanuvchi');
+  const certificateId = `CSE-${Date.now().toString(36).toUpperCase()}`;
 
   const handlePrint = () => {
-    const printContent = certificateRef.current;
-    if (!printContent) return;
-
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
 
@@ -37,229 +34,327 @@ const Certificate: React.FC<CertificateProps> = ({ testTitle, score, date, onClo
       <html>
         <head>
           <title>Certificate - ${userName}</title>
+          <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
           <style>
+            @page {
+              size: A4 landscape;
+              margin: 0;
+            }
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body { 
               display: flex; 
               justify-content: center; 
               align-items: center; 
               min-height: 100vh; 
-              background: #f5f5f5;
-              font-family: 'Georgia', serif;
+              background: #0a0a0a;
+              font-family: 'Inter', sans-serif;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
             }
             .certificate {
-              width: 1000px;
-              height: 700px;
-              background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-              border: 3px solid #d4af37;
+              width: 297mm;
+              height: 210mm;
+              background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
               position: relative;
-              padding: 40px;
+              padding: 40px 60px;
+              overflow: hidden;
             }
             .certificate::before {
               content: '';
               position: absolute;
-              inset: 10px;
-              border: 2px solid #d4af37;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: 
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
               pointer-events: none;
+            }
+            .border-frame {
+              position: absolute;
+              inset: 20px;
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 8px;
+              pointer-events: none;
+            }
+            .border-frame::before {
+              content: '';
+              position: absolute;
+              inset: 8px;
+              border: 1px solid rgba(59, 130, 246, 0.3);
+              border-radius: 4px;
             }
             .header {
               display: flex;
               justify-content: space-between;
               align-items: flex-start;
-              margin-bottom: 20px;
+              position: relative;
+              z-index: 1;
             }
             .logo-section {
               display: flex;
               align-items: center;
-              gap: 12px;
+              gap: 16px;
             }
             .logo {
-              width: 60px;
-              height: 60px;
+              width: 56px;
+              height: 56px;
               object-fit: contain;
+              filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+            }
+            .brand {
+              display: flex;
+              flex-direction: column;
             }
             .brand-name {
               font-size: 28px;
-              font-weight: bold;
-              background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+              font-weight: 700;
+              background: linear-gradient(135deg, #60a5fa, #a78bfa);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
+              letter-spacing: -0.5px;
             }
-            .badge-section {
-              text-align: right;
-            }
-            .badge-title {
-              font-size: 18px;
-              color: #666;
+            .brand-tagline {
+              font-size: 11px;
+              color: rgba(255, 255, 255, 0.5);
               letter-spacing: 3px;
               text-transform: uppercase;
             }
-            .badge-subtitle {
+            .certificate-type {
+              text-align: right;
+            }
+            .certificate-label {
+              font-size: 10px;
+              color: rgba(255, 255, 255, 0.4);
+              letter-spacing: 4px;
+              text-transform: uppercase;
+              margin-bottom: 4px;
+            }
+            .certificate-title {
               font-size: 24px;
-              font-weight: bold;
-              color: #333;
+              font-weight: 600;
+              color: #ffffff;
+              font-family: 'Playfair Display', serif;
             }
-            .seal {
-              width: 120px;
-              height: 120px;
-              background: #e5e7eb;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-top: 10px;
-              margin-left: auto;
-            }
-            .seal-inner {
-              width: 100px;
-              height: 100px;
-              border: 3px solid #9ca3af;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-direction: column;
+            .main-content {
+              position: relative;
+              z-index: 1;
+              margin-top: 50px;
               text-align: center;
             }
-            .seal-text {
-              font-size: 8px;
-              color: #666;
+            .completion-text {
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.5);
+              letter-spacing: 2px;
               text-transform: uppercase;
-              letter-spacing: 1px;
-            }
-            .seal-brand {
-              font-size: 12px;
-              font-weight: bold;
-              color: #333;
-            }
-            .content {
-              text-align: left;
-              margin-top: 30px;
-              padding-left: 20px;
-            }
-            .date {
-              color: #666;
-              font-size: 14px;
-              margin-bottom: 20px;
+              margin-bottom: 16px;
             }
             .recipient-name {
-              font-size: 42px;
-              font-weight: bold;
-              color: #1a1a1a;
-              margin-bottom: 15px;
-              font-family: 'Georgia', serif;
+              font-size: 52px;
+              font-weight: 700;
+              color: #ffffff;
+              font-family: 'Playfair Display', serif;
+              margin-bottom: 20px;
+              text-shadow: 0 4px 30px rgba(59, 130, 246, 0.3);
             }
-            .completion-text {
-              color: #666;
+            .has-completed {
               font-size: 14px;
-              margin-bottom: 10px;
+              color: rgba(255, 255, 255, 0.6);
+              margin-bottom: 12px;
             }
             .course-title {
-              font-size: 24px;
-              font-weight: bold;
-              color: #1a1a1a;
-              margin-bottom: 10px;
+              font-size: 26px;
+              font-weight: 600;
+              color: #60a5fa;
+              margin-bottom: 8px;
             }
-            .course-description {
-              color: #888;
+            .course-provider {
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.4);
+              margin-bottom: 8px;
+            }
+            .score-badge {
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
+              background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
+              border: 1px solid rgba(16, 185, 129, 0.4);
+              padding: 8px 20px;
+              border-radius: 30px;
+              margin-top: 16px;
+            }
+            .score-label {
               font-size: 12px;
-              margin-bottom: 40px;
+              color: rgba(255, 255, 255, 0.6);
             }
-            .signature-section {
+            .score-value {
+              font-size: 18px;
+              font-weight: 700;
+              color: #10b981;
+            }
+            .footer {
+              position: absolute;
+              bottom: 50px;
+              left: 60px;
+              right: 60px;
               display: flex;
               justify-content: space-between;
               align-items: flex-end;
-              margin-top: auto;
-              padding-top: 40px;
+              z-index: 1;
+            }
+            .signature-section {
+              display: flex;
+              gap: 60px;
             }
             .signature {
               text-align: left;
             }
             .signature-line {
-              font-family: 'Brush Script MT', cursive;
-              font-size: 32px;
-              color: #333;
-              margin-bottom: 5px;
+              font-family: 'Playfair Display', serif;
+              font-size: 26px;
+              font-style: italic;
+              color: rgba(255, 255, 255, 0.9);
+              margin-bottom: 8px;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+              padding-bottom: 8px;
             }
             .signature-name {
-              font-size: 12px;
-              color: #666;
+              font-size: 11px;
+              color: rgba(255, 255, 255, 0.6);
+              font-weight: 600;
+              text-transform: uppercase;
+              letter-spacing: 1px;
             }
             .signature-title {
-              font-size: 11px;
-              color: #888;
+              font-size: 10px;
+              color: rgba(255, 255, 255, 0.4);
+            }
+            .date-section {
+              text-align: left;
+            }
+            .date-label {
+              font-size: 10px;
+              color: rgba(255, 255, 255, 0.4);
+              text-transform: uppercase;
+              letter-spacing: 1px;
+              margin-bottom: 4px;
+            }
+            .date-value {
+              font-size: 14px;
+              color: rgba(255, 255, 255, 0.8);
+              font-weight: 500;
             }
             .verify-section {
               text-align: right;
             }
             .verify-label {
-              font-size: 10px;
-              color: #888;
-            }
-            .verify-link {
-              font-size: 11px;
-              color: #3b82f6;
-              text-decoration: underline;
-            }
-            .verify-note {
               font-size: 9px;
-              color: #888;
-              max-width: 250px;
+              color: rgba(255, 255, 255, 0.4);
+              text-transform: uppercase;
+              letter-spacing: 1px;
+              margin-bottom: 4px;
             }
-            .score-badge {
+            .certificate-id {
+              font-size: 12px;
+              color: rgba(96, 165, 250, 0.8);
+              font-family: monospace;
+              letter-spacing: 1px;
+            }
+            .verify-url {
+              font-size: 10px;
+              color: rgba(255, 255, 255, 0.4);
+              margin-top: 4px;
+            }
+            .decorative-circles {
               position: absolute;
-              top: 50px;
-              right: 200px;
-              background: linear-gradient(135deg, #10b981, #059669);
-              color: white;
-              padding: 8px 16px;
-              border-radius: 20px;
-              font-size: 14px;
-              font-weight: bold;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              left: 0;
+              pointer-events: none;
+              overflow: hidden;
+            }
+            .circle {
+              position: absolute;
+              border-radius: 50%;
+              border: 1px solid rgba(59, 130, 246, 0.1);
+            }
+            .circle-1 {
+              width: 400px;
+              height: 400px;
+              bottom: -200px;
+              left: -100px;
+            }
+            .circle-2 {
+              width: 300px;
+              height: 300px;
+              top: -100px;
+              right: -50px;
+            }
+            .circle-3 {
+              width: 200px;
+              height: 200px;
+              top: 50%;
+              right: 10%;
+              border-color: rgba(139, 92, 246, 0.1);
             }
             @media print {
-              body { background: white; }
-              .certificate { box-shadow: none; }
+              body { background: #0f172a; }
             }
           </style>
         </head>
         <body>
           <div class="certificate">
-            <div class="score-badge">${score}%</div>
+            <div class="decorative-circles">
+              <div class="circle circle-1"></div>
+              <div class="circle circle-2"></div>
+              <div class="circle circle-3"></div>
+            </div>
+            <div class="border-frame"></div>
+            
             <div class="header">
               <div class="logo-section">
                 <img src="${window.location.origin}${logoImg}" class="logo" alt="Logo" />
-                <span class="brand-name">CyberSafe</span>
-              </div>
-              <div class="badge-section">
-                <div class="badge-title">COURSE</div>
-                <div class="badge-subtitle">CERTIFICATE</div>
-                <div class="seal">
-                  <div class="seal-inner">
-                    <span class="seal-text">Education for Everyone</span>
-                    <span class="seal-brand">CyberSafe</span>
-                    <span class="seal-text">Course Certificate</span>
-                  </div>
+                <div class="brand">
+                  <span class="brand-name">CyberSafe</span>
+                  <span class="brand-tagline">Education Platform</span>
                 </div>
               </div>
+              <div class="certificate-type">
+                <div class="certificate-label">Certificate of</div>
+                <div class="certificate-title">Completion</div>
+              </div>
             </div>
-            <div class="content">
-              <div class="date">${date}</div>
+
+            <div class="main-content">
+              <div class="completion-text">This is to certify that</div>
               <div class="recipient-name">${userName}</div>
-              <div class="completion-text">has successfully completed</div>
+              <div class="has-completed">has successfully completed the course</div>
               <div class="course-title">${testTitle}</div>
-              <div class="course-description">an online course authorized by CyberSafe Education Platform</div>
+              <div class="course-provider">An authorized course by CyberSafe Education Platform</div>
+              <div class="score-badge">
+                <span class="score-label">Final Score:</span>
+                <span class="score-value">${score}%</span>
+              </div>
             </div>
-            <div class="signature-section">
-              <div class="signature">
-                <div class="signature-line">CyberSafe Team</div>
-                <div class="signature-name">CyberSafe Education</div>
-                <div class="signature-title">Director of CyberSafe Certificates</div>
+
+            <div class="footer">
+              <div class="signature-section">
+                <div class="signature">
+                  <div class="signature-line">CyberSafe Team</div>
+                  <div class="signature-name">CyberSafe Education</div>
+                  <div class="signature-title">Director of Certificates</div>
+                </div>
+                <div class="date-section">
+                  <div class="date-label">Date of Issue</div>
+                  <div class="date-value">${date}</div>
+                </div>
               </div>
               <div class="verify-section">
-                <div class="verify-label">Verify at:</div>
-                <div class="verify-link">cybersafe.edu/verify/${Date.now()}</div>
-                <div class="verify-note">CyberSafe has confirmed the identity of this individual and their participation in the course.</div>
+                <div class="verify-label">Certificate ID</div>
+                <div class="certificate-id">${certificateId}</div>
+                <div class="verify-url">cybersafe.edu/verify</div>
               </div>
             </div>
           </div>
@@ -278,80 +373,101 @@ const Certificate: React.FC<CertificateProps> = ({ testTitle, score, date, onClo
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
       <div className="bg-background rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-auto">
-        {/* Certificate Preview */}
-        <div ref={certificateRef} className="p-8 bg-gradient-to-br from-white to-gray-50 border-4 border-yellow-500/50 m-6 rounded-xl relative overflow-hidden">
-          {/* Decorative border */}
-          <div className="absolute inset-3 border-2 border-yellow-500/30 rounded-lg pointer-events-none" />
-          
-          {/* Score Badge */}
-          <div className="absolute top-6 right-48 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full font-bold">
-            {score}%
-          </div>
-
-          {/* Header */}
-          <div className="flex justify-between items-start mb-8 relative">
-            <div className="flex items-center gap-3">
-              <img src={logoImg} alt="Logo" className="w-16 h-16 object-contain" />
-              <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                CyberSafe
-              </span>
+        {/* Certificate Preview - Dark Coursera Style */}
+        <div className="relative m-4 rounded-xl overflow-hidden" style={{ aspectRatio: '297/210' }}>
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900">
+            {/* Decorative gradients */}
+            <div className="absolute top-0 left-0 w-full h-full">
+              <div className="absolute top-1/2 left-1/5 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+              <div className="absolute top-1/4 right-1/5 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500 tracking-[3px] uppercase">Course</p>
-              <p className="text-xl font-bold text-gray-800">Certificate</p>
-              {/* Seal */}
-              <div className="w-28 h-28 bg-gray-200 rounded-full flex items-center justify-center mt-3 ml-auto">
-                <div className="w-24 h-24 border-3 border-gray-400 rounded-full flex flex-col items-center justify-center text-center p-2">
-                  <span className="text-[8px] text-gray-500 uppercase tracking-wider">Education for Everyone</span>
-                  <Award className="w-6 h-6 text-gray-600 my-1" />
-                  <span className="text-xs font-bold text-gray-700">CyberSafe</span>
+            
+            {/* Border frame */}
+            <div className="absolute inset-4 border border-white/10 rounded-lg">
+              <div className="absolute inset-2 border border-blue-500/20 rounded" />
+            </div>
+
+            {/* Content */}
+            <div className="relative h-full p-8 flex flex-col">
+              {/* Header */}
+              <div className="flex justify-between items-start">
+                <div className="flex items-center gap-4">
+                  <img src={logoImg} alt="Logo" className="w-14 h-14 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
+                  <div>
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                      CyberSafe
+                    </h1>
+                    <p className="text-[10px] text-white/40 tracking-[3px] uppercase">Education Platform</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] text-white/40 tracking-[3px] uppercase mb-1">Certificate of</p>
+                  <p className="text-xl font-semibold text-white font-serif">Completion</p>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Content */}
-          <div className="pl-4 mt-8">
-            <p className="text-gray-500 text-sm mb-4">{date}</p>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4 font-serif">{userName}</h2>
-            <p className="text-gray-500 text-sm mb-2">
-              {getLang() === 'en' ? 'has successfully completed' : getLang() === 'ru' ? 'успешно завершил(а)' : 'muvaffaqiyatli yakunladi'}
-            </p>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">{testTitle}</h3>
-            <p className="text-gray-400 text-xs mb-12">
-              {getLang() === 'en' 
-                ? 'an online course authorized by CyberSafe Education Platform'
-                : getLang() === 'ru'
-                ? 'онлайн-курс, авторизованный платформой CyberSafe Education'
-                : "CyberSafe Education Platform tomonidan avtorizatsiya qilingan onlayn kurs"
-              }
-            </p>
-          </div>
+              {/* Main Content */}
+              <div className="flex-1 flex flex-col items-center justify-center text-center -mt-4">
+                <p className="text-xs text-white/50 tracking-[2px] uppercase mb-3">
+                  {getLang() === 'en' ? 'This is to certify that' : getLang() === 'ru' ? 'Настоящим удостоверяется, что' : 'Ushbu sertifikat tasdiqlaydi'}
+                </p>
+                <h2 className="text-4xl md:text-5xl font-bold text-white font-serif mb-4 drop-shadow-[0_4px_30px_rgba(59,130,246,0.3)]">
+                  {userName}
+                </h2>
+                <p className="text-sm text-white/60 mb-2">
+                  {getLang() === 'en' ? 'has successfully completed the course' : getLang() === 'ru' ? 'успешно завершил(а) курс' : 'kursni muvaffaqiyatli yakunladi'}
+                </p>
+                <h3 className="text-xl md:text-2xl font-semibold text-blue-400 mb-2">{testTitle}</h3>
+                <p className="text-xs text-white/40">
+                  {getLang() === 'en' 
+                    ? 'An authorized course by CyberSafe Education Platform'
+                    : getLang() === 'ru'
+                    ? 'Авторизованный курс от платформы CyberSafe Education'
+                    : "CyberSafe Education Platform tomonidan avtorizatsiya qilingan kurs"
+                  }
+                </p>
+                <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-5 py-2 rounded-full mt-4">
+                  <span className="text-xs text-white/60">
+                    {getLang() === 'en' ? 'Final Score:' : getLang() === 'ru' ? 'Итоговый балл:' : 'Yakuniy ball:'}
+                  </span>
+                  <span className="text-lg font-bold text-emerald-400">{score}%</span>
+                </div>
+              </div>
 
-          {/* Signature */}
-          <div className="flex justify-between items-end mt-16 pl-4">
-            <div>
-              <p className="font-serif text-2xl italic text-gray-700 mb-1">CyberSafe Team</p>
-              <p className="text-xs text-gray-500">CyberSafe Education</p>
-              <p className="text-xs text-gray-400">Director of CyberSafe Certificates</p>
-            </div>
-            <div className="text-right text-xs text-gray-400">
-              <p>Verify at:</p>
-              <p className="text-blue-500 underline">cybersafe.edu/verify/{Date.now()}</p>
-              <p className="max-w-[200px] mt-1">
-                CyberSafe has confirmed the identity of this individual and their participation in the course.
-              </p>
+              {/* Footer */}
+              <div className="flex justify-between items-end">
+                <div className="flex gap-12">
+                  <div>
+                    <p className="text-xl font-serif italic text-white/80 border-b border-white/20 pb-2 mb-2">
+                      CyberSafe Team
+                    </p>
+                    <p className="text-[10px] text-white/60 uppercase tracking-wider font-medium">CyberSafe Education</p>
+                    <p className="text-[9px] text-white/40">Director of Certificates</p>
+                  </div>
+                  <div>
+                    <p className="text-[9px] text-white/40 uppercase tracking-wider mb-1">
+                      {getLang() === 'en' ? 'Date of Issue' : getLang() === 'ru' ? 'Дата выдачи' : 'Berilgan sana'}
+                    </p>
+                    <p className="text-sm text-white/80 font-medium">{date}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-[9px] text-white/40 uppercase tracking-wider mb-1">Certificate ID</p>
+                  <p className="text-xs text-blue-400/80 font-mono tracking-wider">{certificateId}</p>
+                  <p className="text-[9px] text-white/40 mt-1">cybersafe.edu/verify</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Actions */}
         <div className="p-6 border-t border-border flex justify-center gap-4">
-          <Button onClick={handleDownload} className="gap-2 bg-gradient-to-r from-green-500 to-emerald-500">
+          <Button onClick={handleDownload} className="gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600">
             <Download className="w-4 h-4" />
-            {getLang() === 'en' ? 'Download' : getLang() === 'ru' ? 'Скачать' : 'Yuklab olish'}
+            {getLang() === 'en' ? 'Download PDF' : getLang() === 'ru' ? 'Скачать PDF' : 'PDF yuklab olish'}
           </Button>
           <Button onClick={handlePrint} variant="outline" className="gap-2">
             <Printer className="w-4 h-4" />
